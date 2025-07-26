@@ -1,5 +1,6 @@
 from app.api.v1.endpoints import temperature
 from fastapi import APIRouter, HTTPException
+from fastapi.responses import JSONResponse
 import json
 from pathlib import Path
 
@@ -25,6 +26,28 @@ async def combinations():
         with open(file_path, "r") as file:
             data = json.load(file)
         return data
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Data file not found")
+    except json.JSONDecodeError:
+        raise HTTPException(status_code=500, detail="Invalid JSON format")
+
+
+@api_router.get("/spearman")
+async def spearman():
+    """API SPEARMAN IMAGE"""
+    try:
+        file_path = Path(f"data/spearman.txt")
+        
+        # Read the base64 string from the txt file
+        with open(file_path, "r") as f:
+            base64_string = f.read().strip()
+        
+        # Return with proper data URL prefix
+        return JSONResponse({
+            "image": f"data:image/png;base64,{base64_string}",
+            "message": "Image loaded successfully"
+        })
+        
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="Data file not found")
     except json.JSONDecodeError:
