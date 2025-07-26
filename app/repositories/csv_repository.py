@@ -18,7 +18,6 @@ class CSVRepository:
             try:
                 self._df = pd.read_csv(self.file_path)
                 # Convert timestamp to datetime
-                self._df['timestamp'] = pd.to_datetime(self._df['timestamp'])
             except Exception as e:
                 raise DataProcessingError(f"Error reading CSV file: {str(e)}")
         

@@ -38,3 +38,6 @@ class DataService:
     def get_machines(self) -> List[str]:
         """Get list of available machine IDs"""
         return self.csv_repository.get_unique_machines()
+
+    def get_all_data(self):
+        return self.csv_repository.get_all_data()

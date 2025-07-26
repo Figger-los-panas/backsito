@@ -1,4 +1,4 @@
-from app.api.v1.endpoints import temperature
+from app.api.v1.endpoints import temperature, analysis
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse
 import json
@@ -11,6 +11,12 @@ api_router.include_router(
     temperature.router,
     prefix="/temperature",
     tags=["temperature"]
+)
+
+api_router.include_router(
+   analysis.router,
+   prefix="/analysis",
+   tags=["analysis"]
 )
 
 @api_router.get("/health")
